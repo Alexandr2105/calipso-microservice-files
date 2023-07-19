@@ -8,5 +8,5 @@ export const settings = {
   S3_REGION: process.env.S3_REGION,
   BASE_URL_AWS: process.env.BASE_URL_AWS,
   BACKET_NAME: process.env.BACKET_NAME,
-  MONGO_DB: process.env.MONGO_DB,
+  // MONGO_DB: process.env.MONGO_DB,
 };

@@ -49,7 +49,6 @@ export class CreateImagesForPostUseCase
       await this.imageRepository.createNewImage(postImage);
       imagesArray.push({ url: postImage.url });
     }
-    console.log();
     return imagesArray;
   }
 }
