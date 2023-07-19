@@ -1,11 +1,36 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
+import { CommandBus } from '@nestjs/cqrs';
+import { UploadAvatarCommand } from '../application/use-cases/upload.avatar.use.case';
+import { AvatarsDto } from '../dto/avatars.dto';
+import { PostsDto } from '../dto/posts.dto';
+import { CreateImagesForPostCommand } from '../application/use-cases/create.images.for.post.use.case';
+import { GetImagesForPostCommand } from '../application/use-cases/get.images.for.post.use.case';
+import { DeletePostImagesCommand } from '../application/use-cases/delete.post.images.use.case';
 
 @Controller()
 export class PictureController {
-  @MessagePattern({ cmd: 'avatar' })
-  async saveAvatars(data: Buffer) {
-    console.log(data);
-    return 'data';
+  constructor(private commandBus: CommandBus) {}
+  @MessagePattern({ cmd: 'saveAvatar' })
+  async saveAvatars(data: AvatarsDto): Promise<string> {
+    return this.commandBus.execute(
+      new UploadAvatarCommand(data.userId, data.avatar),
+    );
+  }
+
+  @MessagePattern({ cmd: 'saveImages' })
+  async saveImagesForPosts(data: PostsDto) {
+    return this.commandBus.execute(new CreateImagesForPostCommand(data));
+  }
+
+  @MessagePattern({ cmd: 'getImages' })
+  async getImages(data: string) {
+    return this.commandBus.execute(new GetImagesForPostCommand(data));
+  }
+
+  @MessagePattern({ cmd: 'deleteImages' })
+  async deleteImages(data: string) {
+    await this.commandBus.execute(new DeletePostImagesCommand(data));
+    return true;
   }
 }
