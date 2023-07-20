@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { CommandBus } from '@nestjs/cqrs';
 import { UploadAvatarCommand } from '../application/use-cases/upload.avatar.use.case';
@@ -12,8 +12,8 @@ import { DeletePostImagesCommand } from '../application/use-cases/delete.post.im
 export class PictureController {
   constructor(private commandBus: CommandBus) {}
 
-  @Post('saveAvatars')
-  async saveAvatars(@Body() data: AvatarsDto): Promise<string> {
+  @Get('saveAvatars')
+  async saveAvatars(): Promise<string> {
     return 'ok';
     // const { userId, avatar } = data;
     // return this.commandBus.execute(new UploadAvatarCommand(userId, avatar));
