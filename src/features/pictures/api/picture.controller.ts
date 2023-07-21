@@ -12,19 +12,19 @@ import { DeletePostImagesCommand } from '../application/use-cases/delete.post.im
 export class PictureController {
   constructor(private commandBus: CommandBus) {}
 
-  @Post('saveAvatars')
-  async saveAvatars(@Body() data: AvatarsDto): Promise<string> {
-    return 'ok';
-    // const { userId, avatar } = data;
-    // return this.commandBus.execute(new UploadAvatarCommand(userId, avatar));
-  }
-
-  // @MessagePattern({ cmd: 'saveAvatar' })
-  // async saveAvatars(data: AvatarsDto): Promise<string> {
-  //   return this.commandBus.execute(
-  //     new UploadAvatarCommand(data.userId, data.avatar),
-  //   );
+  // @Post('saveAvatars')
+  // async saveAvatars(@Body() data: AvatarsDto): Promise<string> {
+  //   return 'ok';
+  //   // const { userId, avatar } = data;
+  //   // return this.commandBus.execute(new UploadAvatarCommand(userId, avatar));
   // }
+
+  @MessagePattern({ cmd: 'saveAvatar' })
+  async saveAvatars(data: AvatarsDto): Promise<string> {
+    return this.commandBus.execute(
+      new UploadAvatarCommand(data.userId, data.avatar),
+    );
+  }
 
   @MessagePattern({ cmd: 'saveImages' })
   async saveImagesForPosts(data: PostsDto) {
