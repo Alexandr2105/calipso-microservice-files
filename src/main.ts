@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
-    options: { port: 3001, host: 'localhost' },
+    options: { port: 3001, host: 'calypso-git-dev-alexandr2105.vercel.app' },
   });
   //
   // await app.startAllMicroservices();
