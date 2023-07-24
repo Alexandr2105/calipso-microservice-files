@@ -11,7 +11,7 @@ async function bootstrap() {
     transport: Transport.TCP,
   });
   await app.startAllMicroservices();
-  await app.listen(3001, () => {
+  await app.listen(3000, () => {
     console.log('Started 3001 port');
   });
 
