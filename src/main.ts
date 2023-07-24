@@ -16,32 +16,32 @@ async function bootstrap() {
   //   console.log('Started 3001 port');
   // });
 
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    {
-      transport: Transport.TCP,
-      options: {
-        port: 3002,
-      },
-    },
-  );
-  await app.listen();
-
   // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
   //   AppModule,
   //   {
-  //     transport: Transport.RMQ,
+  //     transport: Transport.TCP,
   //     options: {
-  //       urls: [
-  //         'amqps://nvvffhzg:kunlrWhEIXXBPudNmmJTPT20KOCf8-80@stingray.rmq.cloudamqp.com/nvvffhzg',
-  //       ],
-  //       queue: 'FILES_SERVICE',
-  //       queueOptions: {
-  //         durable: false,
-  //       },
+  //       port: 3002,
   //     },
   //   },
   // );
   // await app.listen();
+
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.RMQ,
+      options: {
+        urls: [
+          'amqps://nvvffhzg:kunlrWhEIXXBPudNmmJTPT20KOCf8-80@stingray.rmq.cloudamqp.com/nvvffhzg',
+        ],
+        queue: 'FILES_SERVICE',
+        queueOptions: {
+          durable: false,
+        },
+      },
+    },
+  );
+  await app.listen();
 }
 bootstrap();
