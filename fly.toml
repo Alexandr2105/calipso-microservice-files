@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for calypso-microservice-files on 2023-07-25T13:49:03+03:00
+# fly.toml app configuration file generated for calypso-microservice-files on 2023-07-25T16:23:00+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -13,3 +13,7 @@ primary_region = "ams"
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
