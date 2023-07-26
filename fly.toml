@@ -7,7 +7,7 @@ app = "calypso-microservice-files"
 primary_region = "ams"
 
 [[services]]
-  internal_port = 22
+  internal_port = 4722
   protocol = "tcp"
   auto_stop_machines = true
   auto_start_machines = true
