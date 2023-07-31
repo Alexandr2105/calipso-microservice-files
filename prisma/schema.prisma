@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(uuid())
+  login             String             @unique
+  email             String             @unique
+  createdAt         DateTime
+  passwordHash      String
+  isDeleted         Boolean
+  emailConfirmation EmailConfirmation?
+  refreshTokenData  RefreshTokenData[]
+  userProfile       UserProfile?
+  userPost          Post[]
+}
+
+model EmailConfirmation {
+  userId           String   @id
+  confirmationCode String   @unique
+  expirationDate   DateTime
+  isConfirmed      Boolean  @default(false)
+  user             User     @relation(fields: [userId], references: [id])
+}
+
+model RefreshTokenData{
+  iat        Int
+  exp        Int
+  deviceId   String @id
+  ip         String
+  deviceName String
+  userId     String
+  user       User   @relation(fields: [userId],references: [id])
+}
+
+model UserProfile{
+  userId         String    @id
+  login          String    @unique
+  firstName      String?
+  lastName       String?
+  dateOfBirthday String?
+  city           String?
+  userInfo       String?
+  photo          String?
+  user           User      @relation(fields: [userId],references: [id])
+}
+
+model Post{
+  id          String  @id
+  userId      String
+  description String?
+  createdAt   DateTime
+  user        User    @relation(fields: [userId],references: [id])
+}

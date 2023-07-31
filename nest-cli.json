@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/calypso/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/calypso/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/calypso",
+  "projects": {
+    "calypso": {
+      "type": "application",
+      "root": "apps/calypso",
+      "entryFile": "main",
+      "sourceRoot": "apps/calypso/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/calypso/tsconfig.app.json"
+      }
+    },
+    "files-microservice": {
+      "type": "application",
+      "root": "apps/files-microservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/files-microservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/files-microservice/tsconfig.app.json"
+      }
+    }
   }
 }
